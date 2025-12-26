@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Black-Scholes Calculator</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Black-Scholes Option Pricing</h1>
+
+    <input id="S" type="number" placeholder="Stock Price (S)">
+    <input id="K" type="number" placeholder="Strike Price (K)">
+    <input id="T" type="number" placeholder="Time to Expiry (T)">
+    <input id="r" type="number" step="any" placeholder="Risk-Free Rate (r)">
+    <input id="sigma" type="number" step="any" placeholder="Volatility (σ)">
+
+    <button id="calcBtn">Calculate</button>
+
+    <div id="output"></div>
+</div>
+
+<script src="/script.js"></script>
+</body>
+</html>
