@@ -16,14 +16,20 @@ body {
     width: 320px;
 }
 
-input {
-    width: 100%;
-    margin: 8px 0;
-    padding: 8px;
-}
-
 button {
     width: 100%;
     padding: 10px;
     cursor: pointer;
+}
+
+.callHeatmap{
+    width: 100%; 
+    height: 450px; 
+    margin-top: 3px;
+}
+
+.putHeatmap{
+    width: 100%; 
+    height: 450px; 
+    margin-top: 3px;
 }

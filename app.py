@@ -52,5 +52,41 @@ def calculate():
 
     return jsonify({"call": call, "put": put})
 
+@app.route("/api/spot-strike-heatmap", methods=["POST"])
+def spot_strike_heatmap():
+    data = request.get_json()
+
+    try:
+        S0 = float(data["S"])
+        K0 = float(data["K"])
+        T = float(data["T"])
+        r = float(data["r"])
+        sigma = float(data["sigma"])
+    except:
+        return jsonify({"error": "Invalid input"}), 400
+
+    spots = list(range(int(S0 - 10), int(S0 + 11)))
+    strikes = list(range(int(K0 - 10), int(K0 + 11)))
+
+    call_matrix = []
+    put_matrix = []
+
+    for K in strikes:
+        call_row = []
+        put_row = []
+        for S in spots:
+            call, put = black_scholes(S, K, T, r, sigma)
+            call_row.append(call if call is not None else 0)
+            put_row.append(put if put is not None else 0)
+        call_matrix.append(call_row)
+        put_matrix.append(put_row)
+
+    return jsonify({
+        "spots": spots,
+        "strikes": strikes,
+        "call_prices": call_matrix,
+        "put_prices": put_matrix
+    })
+
 if __name__ == "__main__":
     app.run(debug=True)
