@@ -1,3 +1,40 @@
+const btn = document.getElementById("themeToggle");
+
+btn.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+
+  // Switch icon
+  btn.textContent = document.body.classList.contains("dark")
+    ? "☀️"
+    : "🌙";
+
+    plotHeatmap();
+});
+
+function isDarkMode() {
+  return document.body.classList.contains("dark");
+}
+
+function getPlotlyTheme() {
+  const dark = isDarkMode();
+
+  return {
+    paper_bgcolor: dark ? "#0b0b0b" : "#ffffff",
+    plot_bgcolor: dark ? "#0b0b0b" : "#ffffff",
+    font: {
+      color: dark ? "#eaeaea" : "#111111"
+    },
+    xaxis: {
+      gridcolor: dark ? "#333" : "#ddd",
+      zerolinecolor: dark ? "#444" : "#ccc"
+    },
+    yaxis: {
+      gridcolor: dark ? "#333" : "#ddd",
+      zerolinecolor: dark ? "#444" : "#ccc"
+    }
+  };
+}
+
 document.getElementById("calcBtn").addEventListener("click", async () => {
     const data = {
         S: document.getElementById("S").value,
@@ -28,6 +65,8 @@ document.getElementById("calcBtn").addEventListener("click", async () => {
 
 function drawHeatmaps(data) {
 
+    const theme = getPlotlyTheme();
+
     if (!data.call_prices || data.call_prices.length === 0) {
         console.error("Empty heatmap data");
         return;
@@ -42,7 +81,8 @@ function drawHeatmaps(data) {
     }], {
         title: "Call Price Heatmap",
         xaxis: { title: "Spot Price" },
-        yaxis: { title: "Strike Price" }
+        yaxis: { title: "Strike Price" },
+        ...theme
     });
 
     Plotly.newPlot("putHeatmap", [{
@@ -54,7 +94,8 @@ function drawHeatmaps(data) {
     }], {
         title: "Put Price Heatmap",
         xaxis: { title: "Spot Price" },
-        yaxis: { title: "Strike Price" }
+        yaxis: { title: "Strike Price" },
+        ...theme
     });
 }
 
